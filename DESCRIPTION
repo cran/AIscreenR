@@ -1,6 +1,6 @@
 Package: AIscreenR
 Title: AI Screening Tools in R for Systematic Reviewing
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: c(
     person(given = "Mikkel H.", 
            family = "Vembye", 
@@ -26,9 +26,9 @@ BugReports: https://github.com/MikkelVembye/AIscreenR/issues
 LazyData: true
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2024-11-07 09:01:08 UTC; B199526
+Packaged: 2024-11-26 11:22:33 UTC; B199526
 Author: Mikkel H. Vembye [aut, cre, cph]
     (<https://orcid.org/0000-0001-9071-0724>)
 Maintainer: Mikkel H. Vembye <mikkel.vembye@gmail.com>
 Repository: CRAN
-Date/Publication: 2024-11-08 15:10:15 UTC
+Date/Publication: 2024-11-26 14:00:02 UTC
