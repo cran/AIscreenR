@@ -47,21 +47,21 @@ automatically.}
 \item{abstract}{Name of variable containing the abstract information.}
 
 \item{...}{Further argument to pass to the request body.
-See \url{https://platform.openai.com/docs/api-reference/chat/create}.}
+See \url{https://developers.openai.com/api/reference/resources/chat}.}
 
 \item{model}{Character string with the name of the completion model. Can take
 multiple models, including gpt-4 models. Default = \code{"gpt-4"} (i.e., gpt-4-0613). This model has
 been shown to outperform the gpt-3.5-turbo models in terms of its ability to detect
 relevant studies (Vembye et al., Under preparation).
 Find available model at
-\url{https://platform.openai.com/docs/models/model-endpoint-compatibility}.}
+\url{https://developers.openai.com/api/docs/models/model-endpoint-compatibility}.}
 
 \item{role}{Character string indicate the role of the user. Default is \code{"user"}.}
 
 \item{functions}{Function to steer output. Default is \code{incl_function_simple}.
 To get detailed responses use the hidden function call \code{incl_function} from the package. Also see 'Examples below.
 Find further documentation for function calling at
-\url{https://openai.com/blog/function-calling-and-other-api-updates}.}
+\url{https://developers.openai.com/api/reference/resources/chat#chat-create-tools}.}
 
 \item{function_call_name}{Functions to call.
 Default is \code{list(name = "inclusion_decision_simple")}. To get detailed responses
@@ -72,7 +72,7 @@ where the model considers the results of the tokens with top_p probability mass.
 So 0.1 means only the tokens comprising the top 10\% probability mass are considered.
 We generally recommend altering this or temperature but not both.' (OPEN-AI). Default is 1.
 Find documentation at
-\url{https://platform.openai.com/docs/api-reference/chat/create#chat/create-top_p}.}
+\url{https://developers.openai.com/api/reference/resources/chat#chat/create-top_p}.}
 
 \item{time_info}{Logical indicating whether the run time of each
 request/question should be included in the data. Default = \code{TRUE}.}
@@ -81,8 +81,8 @@ request/question should be included in the data. Default = \code{TRUE}.}
 per request should be included in the output data. Default = \code{TRUE}. When \code{TRUE},
 the output object will include price information of the conducted screening.}
 
-\item{api_key}{Numerical value with your personal API key. Find at
-\url{https://platform.openai.com/account/api-keys}. Use
+\item{api_key}{Numerical value with your personal API key. Find setup guidance at
+\url{https://developers.openai.com/api/docs/quickstart#generate-an-api-key}. Use
 \code{\link[httr2:secrets]{httr2::secret_make_key()}}, \code{\link[httr2:secrets]{httr2::secret_encrypt()}}, and
 \code{\link[httr2:secrets]{httr2::secret_decrypt()}} to scramble and decrypt the api key and
 use \code{\link[=set_api_key]{set_api_key()}} to securely automate the use of the
@@ -107,7 +107,7 @@ should be used instead' (Wickham, 2023).}
 
 \item{rpm}{Numerical value indicating the number of requests per minute (rpm)
 available for the specified api key. Find more information at
-\url{https://platform.openai.com/docs/guides/rate-limits/what-are-the-rate-limits-for-our-api}.
+\url{https://developers.openai.com/api/docs/models/model-endpoint-compatibility}.
 Alternatively, use \code{\link[=rate_limits_per_minute]{rate_limits_per_minute()}}.}
 
 \item{reps}{Numerical value indicating the number of times the same
@@ -166,7 +166,7 @@ use \code{\link[=tabscreen_gpt.tools]{tabscreen_gpt.tools()}}.
 The function allows to run title and abstract screening across multiple prompts and with
 repeated questions to check for consistency across answers. This function draws
 on the newly developed function calling to better steer the output of the responses.
-This function was used in \href{https://osf.io/preprints/osf/yrhzm}{Vembye, Christensen, Mølgaard, and Schytt. (2025)}.
+This function was used in \href{https://psycnet.apa.org/record/2026-37236-001}{Vembye, Christensen, Mølgaard, and Schytt. (2025)}.
 }
 \note{
 The \code{answer_data_sum} data contains the following mandatory variables:
@@ -226,7 +226,7 @@ The \code{price_data} data contains the following variables:
 \bold{price_total_dollar} \tab \code{integer} \tab total price for all tokens for the correspondent gpt-model. \cr
 }
 
-Find current token pricing at \url{https://openai.com/pricing}.
+Find current token pricing at \url{https://developers.openai.com/api/docs/pricing}.
 }
 \examples{
 \dontrun{
@@ -261,7 +261,7 @@ tabscreen_gpt.original(
 \references{
 Vembye, M. H., Christensen, J., Mølgaard, A. B., & Schytt, F. L. W. (2025)
 \emph{GPT API Models Can Function as Highly Reliable Second Screeners of Titles and Abstracts in Systematic Reviews:
-A Proof of Concept and Common Guidelines} \url{https://osf.io/preprints/osf/yrhzm}
+A Proof of Concept and Common Guidelines} \url{https://psycnet.apa.org/record/2026-37236-001}
 
 Wickham H (2023).
 \emph{httr2: Perform HTTP Requests and Process the Responses}.

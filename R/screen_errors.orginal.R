@@ -1,12 +1,12 @@
 #' @title Re-screen failed requests.
 #'
 #' @description
-#' `r lifecycle::badge("deprecated")`<br>
+#' `r lifecycle::badge("superseded")`<br>
 #' <br>
 #'
 #' This function supports re-screening of all failed title and abstract requests
 #' screened with [tabscreen_gpt.original()]. This function has been deprecated because
-#' OpenAI has deprecated the function_call and and functions argument that was used
+#' OpenAI has deprecated the function_call and functions argument that was used
 #' in [tabscreen_gpt.original()].
 #'
 #' @references Wickham H (2023).
@@ -15,7 +15,7 @@
 #'
 #' @param object An object of class `'chatgpt'`.
 #' @param ... Further argument to pass to the request body.
-#'  See \url{https://platform.openai.com/docs/api-reference/chat/create}.
+#'  See \url{https://developers.openai.com/api/reference/resources/chat}.
 #'  If used in the original screening (e.g., with [tabscreen_gpt.original()]), the argument(s)
 #'  must be specified again here.
 #' @param api_key Numerical value with your personal API key.

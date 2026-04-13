@@ -4,7 +4,7 @@
 \alias{screen_errors.gpt}
 \title{Re-screen failed requests.}
 \usage{
-\method{screen_errors}{gpt}(
+screen_errors.gpt(
   object,
   api_key = get_api_key(),
   max_tries = 16,
@@ -47,7 +47,7 @@ that a precise wait time is not available that the \code{backoff} strategy
 should be used instead' (Wickham, 2023). If missing, the \code{after} value
 from the original screening conducted with \code{\link[=tabscreen_gpt]{tabscreen_gpt()}} will be used.}
 
-\item{...}{Further argument to pass to the request body. See \url{https://platform.openai.com/docs/api-reference/chat/create}.
+\item{...}{Further argument to pass to the request body. See \url{https://developers.openai.com/api/reference/resources/chat}.
 If used in the original screening in \code{\link[=tabscreen_gpt]{tabscreen_gpt()}}, the argument(s)
 must be specified again here.}
 }
@@ -56,7 +56,7 @@ An object of class \code{'gpt'} similar to the object returned by \code{\link[=t
 See documentation for \code{\link[=tabscreen_gpt]{tabscreen_gpt()}}.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}\if{html}{\out{<br>}}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}}\if{html}{\out{<br>}}
 \if{html}{\out{<br>}}
 
 This function supports re-screening of all failed title and abstract requests
@@ -79,7 +79,7 @@ obj_with_error <-
 
 obj_rescreened <-
   obj_with_error |>
-  screen_error()
+  screen_errors()
 
 }
 

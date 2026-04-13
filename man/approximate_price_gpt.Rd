@@ -13,7 +13,9 @@ approximate_price_gpt(
   model = "gpt-4o-mini",
   reps = 1,
   top_p = 1,
-  token_word_ratio = 1.6
+  token_word_ratio = 1.6,
+  reasoning_effort = "medium",
+  verbosity = "low"
 )
 }
 \arguments{
@@ -31,7 +33,7 @@ automatically.}
 \item{model}{Character string with the name of the completion model. Can take
 multiple models, including gpt-4 models. Default = \code{"gpt-4o-mini"}.
 Find available model at
-\url{https://platform.openai.com/docs/models/model-endpoint-compatibility}.}
+\url{https://developers.openai.com/api/docs/models/model-endpoint-compatibility}.}
 
 \item{reps}{Numerical value indicating the number of times the same
 question should be sent to the GPT server. This can be useful to test consistency
@@ -43,10 +45,16 @@ where the model considers the results of the tokens with top_p probability mass.
 So 0.1 means only the tokens comprising the top 10\% probability mass are considered.
 We generally recommend altering this or temperature but not both.' (OPEN-AI). Default is 1.
 Find documentation at
-\url{https://platform.openai.com/docs/api-reference/chat/create#chat/create-top_p}.}
+\url{https://developers.openai.com/api/reference/resources/chat#chat/create-top_p}.}
 
 \item{token_word_ratio}{The multiplier used to approximate the number of tokens per word.
 Default is \code{1.6} which we empirically have found to be the average number of tokens per word.}
+
+\item{reasoning_effort}{Character string indicating the level of reasoning effort required for the task. Default is \code{"medium"}.
+Can take the values \code{"low"}, \code{"medium"}, and \code{"high"}. Only applicable for gpt-5 models.}
+
+\item{verbosity}{Character string indicating the level of verbosity in the model's responses. Default is \code{"low"}.
+Can take the values \code{"low"}, \code{"medium"}, and \code{"high"}. Only applicable for gpt-5 models.}
 }
 \value{
 An object of class \code{"gpt_price"}. The object is a list containing the following

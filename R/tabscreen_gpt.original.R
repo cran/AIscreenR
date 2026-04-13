@@ -18,11 +18,11 @@
 #' The function allows to run title and abstract screening across multiple prompts and with
 #' repeated questions to check for consistency across answers. This function draws
 #' on the newly developed function calling to better steer the output of the responses.
-#' This function was used in [Vembye, Christensen, Mølgaard, and Schytt. (2025)](https://osf.io/preprints/osf/yrhzm).
+#' This function was used in [Vembye, Christensen, Mølgaard, and Schytt. (2025)](https://psycnet.apa.org/record/2026-37236-001).
 #'
 #' @references Vembye, M. H., Christensen, J., Mølgaard, A. B., & Schytt, F. L. W. (2025)
 #'   \emph{GPT API Models Can Function as Highly Reliable Second Screeners of Titles and Abstracts in Systematic Reviews:
-#'   A Proof of Concept and Common Guidelines} \url{https://osf.io/preprints/osf/yrhzm}
+#'   A Proof of Concept and Common Guidelines} \url{https://psycnet.apa.org/record/2026-37236-001}
 #'
 #' Wickham H (2023).
 #' \emph{httr2: Perform HTTP Requests and Process the Responses}.
@@ -30,18 +30,18 @@
 #'
 #' @template common-arg
 #' @param ... Further argument to pass to the request body.
-#'   See \url{https://platform.openai.com/docs/api-reference/chat/create}.
+#'   See \url{https://developers.openai.com/api/reference/resources/chat}.
 #' @param model Character string with the name of the completion model. Can take
 #'   multiple models, including gpt-4 models. Default = `"gpt-4"` (i.e., gpt-4-0613). This model has
 #'   been shown to outperform the gpt-3.5-turbo models in terms of its ability to detect
 #'   relevant studies (Vembye et al., Under preparation).
 #'   Find available model at
-#' \url{https://platform.openai.com/docs/models/model-endpoint-compatibility}.
+#' \url{https://developers.openai.com/api/docs/models/model-endpoint-compatibility}.
 #' @param role Character string indicate the role of the user. Default is `"user"`.
 #' @param functions Function to steer output. Default is `incl_function_simple`.
 #'   To get detailed responses use the hidden function call `incl_function` from the package. Also see 'Examples below.
 #'   Find further documentation for function calling at
-#'   \url{https://openai.com/blog/function-calling-and-other-api-updates}.
+#'   \url{https://developers.openai.com/api/reference/resources/chat#chat-create-tools}.
 #' @param function_call_name Functions to call.
 #'   Default is `list(name = "inclusion_decision_simple")`. To get detailed responses
 #'   use `list(name = "inclusion_decision")`. Also see 'Examples below.
@@ -50,14 +50,14 @@
 #'   So 0.1 means only the tokens comprising the top 10% probability mass are considered.
 #'   We generally recommend altering this or temperature but not both.' (OPEN-AI). Default is 1.
 #'   Find documentation at
-#' \url{https://platform.openai.com/docs/api-reference/chat/create#chat/create-top_p}.
+#' \url{https://developers.openai.com/api/reference/resources/chat#chat/create-top_p}.
 #' @param time_info Logical indicating whether the run time of each
 #'   request/question should be included in the data. Default = `TRUE`.
 #' @param token_info Logical indicating whether the number of prompt and completion tokens
 #'   per request should be included in the output data. Default = `TRUE`. When `TRUE`,
 #'   the output object will include price information of the conducted screening.
-#' @param api_key Numerical value with your personal API key. Find at
-#'  \url{https://platform.openai.com/account/api-keys}. Use
+#' @param api_key Numerical value with your personal API key. Find setup guidance at
+#'  \url{https://developers.openai.com/api/docs/quickstart#generate-an-api-key}. Use
 #'  [httr2::secret_make_key()], [httr2::secret_encrypt()], and
 #'  [httr2::secret_decrypt()] to scramble and decrypt the api key and
 #'  use [set_api_key()] to securely automate the use of the
@@ -77,7 +77,7 @@
 #'   should be used instead' (Wickham, 2023).
 #' @param rpm Numerical value indicating the number of requests per minute (rpm)
 #'   available for the specified api key. Find more information at
-#'   \url{https://platform.openai.com/docs/guides/rate-limits/what-are-the-rate-limits-for-our-api}.
+#'   \url{https://developers.openai.com/api/docs/models/model-endpoint-compatibility}.
 #'   Alternatively, use [rate_limits_per_minute()].
 #' @param reps Numerical value indicating the number of times the same
 #'   question should be sent to OpenAI's GPT API models. This can be useful to test consistency
@@ -167,7 +167,7 @@
 #'  \bold{price_total_dollar} \tab \code{integer} \tab total price for all tokens for the correspondent gpt-model. \cr
 #' }
 #'
-#' Find current token pricing at \url{https://openai.com/pricing}.
+#' Find current token pricing at \url{https://developers.openai.com/api/docs/pricing}.
 #'
 #' @importFrom stats df
 #' @import dplyr
@@ -241,7 +241,7 @@ tabscreen_gpt.original <- function(
   if (as.Date(Sys.time()) > as.Date("2024-09-13") && model == "gpt-3.5-turbo-0613"){
     stop("The gpt-3.5-turbo-0613 model has deprecated and can no longer be used.")
   } else{
-    message("Note that the gpt-3.5-turbo-0613 deprecates Septemper 13 2024 and can no long be used there after.")
+    message("Note that the gpt-3.5-turbo-0613 deprecates Septemper 13 2024 and can no longer be used there after.")
   }
 
 

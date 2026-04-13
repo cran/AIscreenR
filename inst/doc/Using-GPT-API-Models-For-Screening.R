@@ -1,26 +1,24 @@
-## ----include = FALSE----------------------------------------------------------
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  out.width = "100%",
-  eval = FALSE
-)
+## -----------------------------------------------------------------------------
+#| echo: true
+#| eval: false
 
-## ----eval = FALSE, warning=FALSE, message=FALSE-------------------------------
 # # Loading packages
 # library(AIscreenR) # Used to screen and calculate gpt vs. human performance
-# library(synthesisr)  # Used to load RIS files
 # library(tibble)    # Used to work with tibbles
 # library(dplyr)     # Used to manipulate data
 # library(purrr)     # For loops
 # library(usethis)   # Used to add the API key the R environment (only relevant the first time you screen)
 # library(future)    # Used to conduct screenings in parallel
 
+
 ## -----------------------------------------------------------------------------
+#| echo: true
+#| eval: false
+
 # # NOTE: Find the RIS files behind this vignette at https://osf.io/kfbvu/
 # 
 # # Loading EXCLUDED studies
-# ris_dat_excl <- read_refs("friends_excl.ris") |> # Add the path to your RIS file here
+# ris_dat_excl <- read_ris_to_dataframe("friends_excl.ris") |> # Add the path to your RIS file here
 #   as_tibble() |>
 #   select(author, eppi_id, title, abstract) |> # Using only relevant variables
 #   mutate(
@@ -46,7 +44,7 @@ knitr::opts_chunk$set(
 # #># ℹ Use `print(n = ...)` to see more rows
 # 
 # # Loading INCLUDED studies
-# ris_dat_incl <- read_refs("friends_incl.ris") |>
+# ris_dat_incl <- read_ris_to_dataframe("friends_incl.ris") |>
 #   suppressWarnings() |>
 #   as_tibble() |>
 #   select(author, eppi_id, title, abstract) |>
@@ -72,7 +70,11 @@ knitr::opts_chunk$set(
 # #># ℹ 87 more rows
 # #># ℹ Use `print(n = ...)` to see more rows
 
-## ----eval = FALSE-------------------------------------------------------------
+
+## -----------------------------------------------------------------------------
+#| echo: true
+#| eval: false
+
 # set.seed(09042024)
 # 
 # excl_sample <-
@@ -110,20 +112,19 @@ knitr::opts_chunk$set(
 # #># ℹ 190 more rows
 # #># ℹ Use `print(n = ...)` to see more rows
 
-## ----eval=TRUE, echo=FALSE, fig.cap='*Figure 1 - Generate API key from OpenAI*'----
-knitr::include_graphics("helper-stuff/API_key_pic.png")
 
 ## -----------------------------------------------------------------------------
+#| echo: true
+#| eval: false
+
 # # Run code to open your .Renviron file
 # usethis::edit_r_environ()
 
-## ----eval=TRUE, echo=FALSE, fig.cap='*Figure 2 - R environment file*'---------
-knitr::include_graphics("helper-stuff/Renviron.png")
 
-## ----eval=TRUE, echo=FALSE, fig.cap='*Figure 3 - Set API key*'----------------
-knitr::include_graphics("helper-stuff/set_api.png")
+## -----------------------------------------------------------------------------
+#| echo: true
+#| eval: false
 
-## ----eval = FALSE-------------------------------------------------------------
 # prompt <- "We are screening studies for a systematic literature review.
 # The topic of the systematic review is the effect of the FRIENDS preventive programme
 # on reducing anxiety symptoms in children and adolescents. The FRIENDS programme is a
@@ -134,17 +135,22 @@ knitr::include_graphics("helper-stuff/set_api.png")
 # 1) Is the study about the FRIENDS preventive programme?
 # 2) Is the study estimating an effect between a treatment and control/comparison group?"
 
-## ----eval=TRUE, echo=FALSE, fig.cap='*Figure 4 - Prompting in Word*'----------
-knitr::include_graphics("helper-stuff/friends_prompt.png")
 
 ## -----------------------------------------------------------------------------
+#| echo: true
+#| eval: false
+
 # word_path <-  system.file("extdata", "word_prompt_1.docx", package = "AIscreenR")
 # 
 # prompt <-
 #   readtext::readtext(word_path)$text |>
 #       stringr::str_remove_all("\n")
 
-## ----message=FALSE, eval=FALSE------------------------------------------------
+
+## -----------------------------------------------------------------------------
+#| echo: true
+#| eval: false
+
 # # Gets information about whether you have access to a given model and
 # # how many requests per minutes you are allow to send.
 # models_rpm <- rate_limits_per_minute("gpt-4o-mini")
@@ -169,7 +175,11 @@ knitr::include_graphics("helper-stuff/friends_prompt.png")
 # # Back to the sequential plan
 # plan(sequential)
 
-## ----message=FALSE, eval=FALSE------------------------------------------------
+
+## -----------------------------------------------------------------------------
+#| echo: true
+#| eval: false
+
 # # The print output when calling the result object
 # result_object
 # #>
@@ -193,12 +203,20 @@ knitr::include_graphics("helper-stuff/friends_prompt.png")
 # #># ℹ 190 more rows
 # #># ℹ Use `print(n = ...)` to see more rows
 
-## ----eval=FALSE---------------------------------------------------------------
+
+## -----------------------------------------------------------------------------
+#| echo: true
+#| eval: false
+
 # result_object <-
 #   result_object |>
 #   screen_errors()
 
-## ----screen_stats-------------------------------------------------------------
+
+## -----------------------------------------------------------------------------
+#| echo: true
+#| eval: false
+
 # screen_performance <-
 #   result_object |>
 #   screen_analyzer(human_decision = human_code) # state the name of the variable containing the human decision.
@@ -209,10 +227,11 @@ knitr::include_graphics("helper-stuff/friends_prompt.png")
 # #>      <int> <chr>       <int> <dbl>       <dbl>  <dbl>       <dbl>  <dbl> <chr>
 # #>1        1 gpt-4o-mini    10     1        0.97   0.92       0.987    0.4 Studies have been included in at least 40% of the 10 screenings.
 
-## ----eval=TRUE, echo=FALSE, fig.cap='*Figure 5 - Generic benchmark scheme from Vembye et al. (2024)*'----
-knitr::include_graphics("helper-stuff/benchmark_scheme.png")
 
 ## -----------------------------------------------------------------------------
+#| echo: true
+#| eval: false
+
 # incl_dist <- attr(screen_performance, "p_incl_data")
 # incl_dist |> select(model, recall, specificity, criteria)
 # #> # A tibble: 10 × 4
@@ -229,7 +248,11 @@ knitr::include_graphics("helper-stuff/benchmark_scheme.png")
 # #> 9 gpt-4o-mini   0.84       0.987 Studies have been included in at least 90% of the 10 screenings.
 # #>10 gpt-4o-mini   0.74       0.987 Studies have been included in all of the 10 screenings.
 
+
 ## -----------------------------------------------------------------------------
+#| echo: true
+#| eval: false
+
 # disagree_dat <-
 #   result_object$answer_data_aggregated |>
 #   filter(human_code == 1, final_decision_gpt_num == 0, incl_p == 0)
@@ -254,7 +277,11 @@ knitr::include_graphics("helper-stuff/benchmark_scheme.png")
 # 
 # plan(sequential)
 
+
 ## -----------------------------------------------------------------------------
+#| echo: true
+#| eval: false
+
 # # Example of abstract included by the human and excluded by gpt-4o-mini
 # result_object_detail$answer_data$abstract[1]
 # #> [1] "Introduction: Many universal school-based preventative intervention trials
@@ -278,7 +305,11 @@ knitr::include_graphics("helper-stuff/benchmark_scheme.png")
 # #> effects on 8<e2><80><93>9-year-old children.
 # #> (PsycInfo Database Record (c) 2022 APA, all rights reserved)"
 
+
 ## -----------------------------------------------------------------------------
+#| echo: true
+#| eval: false
+
 # # Example of explanation for exclusion
 # # Seems reasonable why the records was thrown out by gpt.
 # result_object_detail$answer_data$detailed_description[1]
@@ -288,7 +319,11 @@ knitr::include_graphics("helper-stuff/benchmark_scheme.png")
 # #> Additionally, it assesses a general anxiety intervention rather than
 # #> specifically measuring the FRIENDS programme's effectiveness."
 
-## ----eval = FALSE-------------------------------------------------------------
+
+## -----------------------------------------------------------------------------
+#| echo: true
+#| eval: false
+
 # # All RIS file data
 # all_dat <-
 #   bind_rows(ris_dat_excl, ris_dat_incl) |> # Use RIS file data here
@@ -318,7 +353,11 @@ knitr::include_graphics("helper-stuff/benchmark_scheme.png")
 # #> 1 Prompt 1 gpt-4o-mini         10               2.99               0.111               3.11
 # #> 2 Prompt 1 gpt-4                1              59.9                1.11               61.0
 
+
 ## -----------------------------------------------------------------------------
+#| echo: true
+#| eval: false
+
 # # Set parallel plan
 # plan(multisession)
 # 
@@ -341,10 +380,14 @@ knitr::include_graphics("helper-stuff/benchmark_scheme.png")
 # # Back to the sequential plan
 # plan(sequential)
 
+
 ## -----------------------------------------------------------------------------
+#| echo: true
+#| eval: false
+
 # incl_refs <- result_object$answer_data_aggregated |>
 #   filter(incl_p >= 0.1)
 # 
 # 
-# write_refs(as.data.frame(incl_refs), file = "file_name.ris", format = "ris")
+# save_dataframe_to_ris(as.data.frame(incl_refs), file = "file_name.ris")
 

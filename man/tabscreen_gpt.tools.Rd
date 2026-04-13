@@ -6,20 +6,26 @@
 \title{Title and abstract screening with GPT API models using function calls via the tools argument}
 \usage{
 tabscreen_gpt.tools(data, prompt, studyid, title, abstract,
-   model = "gpt-4o-mini", role = "user", tools = NULL, tool_choice = NULL, top_p = 1,
-   time_info = TRUE, token_info = TRUE, api_key = get_api_key(), max_tries = 16,
-   max_seconds = NULL, is_transient = gpt_is_transient, backoff = NULL,
-   after = NULL, rpm = 10000, reps = 1, seed_par = NULL, progress = TRUE,
-   decision_description = FALSE, messages = TRUE, incl_cutoff_upper = NULL,
-   incl_cutoff_lower = NULL, force = FALSE, fine_tuned = FALSE, ...)
+  api_url = "https://api.openai.com/v1/chat/completions", model = "gpt-4o-mini",
+  role = "user", tools = NULL, tool_choice = NULL, top_p = 1,
+  time_info = TRUE, token_info = TRUE, api_key = get_api_key(), max_tries = 16,
+  max_seconds = NULL, is_transient = gpt_is_transient, backoff = NULL,
+  after = NULL, rpm = 10000, reps = 1, seed_par = NULL, progress = TRUE,
+  decision_description = FALSE, messages = TRUE, incl_cutoff_upper = NULL,
+  incl_cutoff_lower = NULL, force = FALSE, custom_model = FALSE,
+  fine_tuned = deprecated(), reasoning_effort = "medium", verbosity = "low",
+  overinclusive = TRUE, ...)
 
 tabscreen_gpt(data, prompt, studyid, title, abstract,
-   model = "gpt-4o-mini", role = "user", tools = NULL, tool_choice = NULL, top_p = 1,
-   time_info = TRUE, token_info = TRUE, api_key = get_api_key(), max_tries = 16,
-   max_seconds = NULL, is_transient = gpt_is_transient, backoff = NULL,
-   after = NULL, rpm = 10000, reps = 1, seed_par = NULL, progress = TRUE,
-   decision_description = FALSE, messages = TRUE, incl_cutoff_upper = NULL,
-   incl_cutoff_lower = NULL, force = FALSE, fine_tuned = FALSE, ...)
+  api_url = "https://api.openai.com/v1/chat/completions", model = "gpt-4o-mini",
+  role = "user", tools = NULL, tool_choice = NULL, top_p = 1,
+  time_info = TRUE, token_info = TRUE, api_key = get_api_key(), max_tries = 16,
+  max_seconds = NULL, is_transient = gpt_is_transient, backoff = NULL,
+  after = NULL, rpm = 10000, reps = 1, seed_par = NULL, progress = TRUE,
+  decision_description = FALSE, messages = TRUE, incl_cutoff_upper = NULL,
+  incl_cutoff_lower = NULL, force = FALSE, custom_model = FALSE,
+  fine_tuned = deprecated(), reasoning_effort = "medium", verbosity = "low",
+  overinclusive = TRUE, ...)
 }
 \arguments{
 \item{data}{Dataset containing the titles and abstracts.}
@@ -33,28 +39,30 @@ automatically.}
 
 \item{abstract}{Name of variable containing the abstract information.}
 
+\item{api_url}{Character string with the endpoint URL for OpenAI's API. Default is \code{"https://api.openai.com/v1/chat/completions"}.}
+
 \item{model}{Character string with the name of the completion model. Can take
 multiple models. Default is the latest \code{"gpt-4o-mini"}.
 Find available model at
-\url{https://platform.openai.com/docs/models/model-endpoint-compatibility}.}
+\url{https://developers.openai.com/api/docs/models/model-endpoint-compatibility}.}
 
 \item{role}{Character string indicating the role of the user. Default is \code{"user"}.}
 
 \item{tools}{This argument allows this user to apply customized functions.
-See \url{https://platform.openai.com/docs/api-reference/chat/create#chat-create-tools}.
+See \url{https://developers.openai.com/api/reference/resources/chat#chat-create-tools}.
 Default is \code{NULL}. If not specified the default function calls from \code{AIscreenR} are used.}
 
 \item{tool_choice}{If a customized function is provided this argument
 'controls which (if any) tool is called by the model' (OpenAI). Default is \code{NULL}.
 If set to \code{NULL} when using a customized function, the default is \code{"auto"}.
-See \url{https://platform.openai.com/docs/api-reference/chat/create#chat-create-tool_choice}.}
+See \url{https://developers.openai.com/api/reference/resources/chat#chat-create-tool_choice}.}
 
 \item{top_p}{'An alternative to sampling with temperature, called nucleus sampling,
 where the model considers the results of the tokens with top_p probability mass.
 So 0.1 means only the tokens comprising the top 10\% probability mass are considered.
 We generally recommend altering this or temperature but not both.' (OpenAI). Default is 1.
 Find documentation at
-\url{https://platform.openai.com/docs/api-reference/chat/create#chat/create-top_p}.}
+\url{https://developers.openai.com/api/reference/resources/chat#chat/create-top_p}.}
 
 \item{time_info}{Logical indicating whether the run time of each
 request/question should be included in the data. Default is \code{TRUE}.}
@@ -91,7 +99,7 @@ should be used instead' (Wickham, 2023).}
 
 \item{rpm}{Numerical value indicating the number of requests per minute (rpm)
 available for the specified model. Find more information at
-\url{https://platform.openai.com/docs/guides/rate-limits/what-are-the-rate-limits-for-our-api}.
+\url{https://developers.openai.com/api/docs/models/model-endpoint-compatibility}.
 Alternatively, use \code{\link[=rate_limits_per_minute]{rate_limits_per_minute()}}.}
 
 \item{reps}{Numerical value indicating the number of times the same
@@ -132,10 +140,25 @@ title and abstract 4 times, we suggest that the study should be check by a human
 This argument is developed to avoid the conduct of wrong and extreme sized screening.
 Default is \code{FALSE}.}
 
-\item{fine_tuned}{Logical indicating whether a fine-tuned model is used. Default is \code{FALSE}.}
+\item{custom_model}{Logical indicating whether a fine-tuned or custom model is used. Default is \code{FALSE}.}
+
+\item{fine_tuned}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Use \code{custom_model} instead.}
+
+\item{reasoning_effort}{Character string indicating the level of reasoning effort required for the task. Default is \code{"low"}.
+Can take the values \code{"low"}, \code{"medium"}, and \code{"high"}. See \url{https://developers.openai.com/api/docs/guides/reasoning} for more information.}
+
+\item{verbosity}{Character string indicating the level of verbosity in the model's responses. Default is \code{"low"}.
+Can take the values \code{"low"}, \code{"medium"}, and \code{"high"}. See \url{https://developers.openai.com/api/reference/resources/chat} for more information.}
+
+\item{overinclusive}{Logical indicating whether uncertain decisions (\code{"1.1"}) should be
+allowed in the default function calling setup. Default is \code{TRUE}, which means that the
+default function calling setup will allow for uncertain decisions.
+If \code{FALSE}, the default function calling setup will not allow for uncertain decisions and
+will only return binary decisions (i.e., "1" or "0"). This argument only affects the default
+function calling setup.}
 
 \item{...}{Further argument to pass to the request body.
-See \url{https://platform.openai.com/docs/api-reference/chat/create}.}
+See \url{https://developers.openai.com/api/reference/resources/chat}.}
 }
 \value{
 An object of class \code{'gpt'}. The object is a list containing the following
@@ -162,9 +185,9 @@ Specifically, it allows the user to draw on GPT-3.5, GPT-4, GPT-4o, GPT-4o-mini,
 The function allows to run title and abstract screening across multiple prompts and with
 repeated questions to check for consistency across answers. All of which can be done in parallel.
 The function draws on the newly developed function calling which is called via the
-tools argument in the request body. This is the main different between \code{\link[=tabscreen_gpt.tools]{tabscreen_gpt.tools()}}
+tools argument in the request body. This is the main difference between \code{\link[=tabscreen_gpt.tools]{tabscreen_gpt.tools()}}
 and \code{\link[=tabscreen_gpt.original]{tabscreen_gpt.original()}}. Function calls ensure more reliable and consistent responses to ones
-requests. See \href{https://osf.io/preprints/osf/yrhzm}{Vembye, Christensen, Mølgaard, and Schytt. (2025)}
+requests. See \href{https://psycnet.apa.org/record/2026-37236-001}{Vembye, Christensen, Mølgaard, and Schytt. (2025)}
 for guidance on how adequately to conduct title and abstract screening with GPT models.
 }
 \note{
@@ -231,7 +254,7 @@ The \code{price_data} data contains the following variables:
 \bold{total_price_dollar} \tab \code{integer} \tab total price for all tokens for the correspondent gpt-model. \cr
 }
 
-Find current token pricing at \url{https://openai.com/pricing} or \link{model_prizes}.
+Find current token pricing at \url{https://developers.openai.com/api/docs/pricing} or \link{model_prizes}.
 }
 \examples{
 \dontrun{
@@ -272,9 +295,10 @@ plan(sequential)
 }
 }
 \references{
-Vembye, M. H., Christensen, J., Mølgaard, A. B., & Schytt, F. L. W. (2025)
-\emph{GPT API Models Can Function as Highly Reliable Second Screeners of Titles and Abstracts in Systematic Reviews:
-A Proof of Concept and Common Guidelines} \url{https://osf.io/preprints/osf/yrhzm}
+Vembye, M. H., Christensen, J., Mølgaard, A. B., & Schytt, F. L. W. (2025).
+Generative Pretrained Transformer Models Can Function as Highly Reliable Second Screeners of Titles
+and Abstracts in Systematic Reviews: A Proof of Concept and Common Guidelines. \emph{Psychological Methods}.
+\doi{10.1037/met0000769}
 
 Thomas, J. et al. (2024).
 Responsible AI in Evidence SynthEsis (RAISE): guidance and recommendations.
