@@ -1,6 +1,6 @@
 Package: AIscreenR
 Title: AI Screening Tools in R for Systematic Reviewing
-Version: 0.3.0
+Version: 0.3.1
 Authors@R: c(
     person(given = "Mikkel H.", 
            family = "Vembye", 
@@ -32,10 +32,10 @@ LazyData: true
 VignetteBuilder: quarto
 Config/Needs/website: quarto
 NeedsCompilation: no
-Packaged: 2026-04-13 11:06:02 UTC; B375477
+Packaged: 2026-04-13 16:21:21 UTC; B199526
 Author: Mikkel H. Vembye [aut, cre] (ORCID:
     <https://orcid.org/0000-0001-9071-0724>),
   Thomas Olsen [aut]
 Maintainer: Mikkel H. Vembye <mikkel.vembye@gmail.com>
 Repository: CRAN
-Date/Publication: 2026-04-13 12:00:02 UTC
+Date/Publication: 2026-04-13 19:20:14 UTC
