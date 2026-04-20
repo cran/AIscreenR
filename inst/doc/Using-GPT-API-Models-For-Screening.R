@@ -23,7 +23,8 @@
 #   select(author, eppi_id, title, abstract) |> # Using only relevant variables
 #   mutate(
 #     human_code = 0, #Tracking the human decision
-#     across(c(author, title, abstract), ~ na_if(., "NA"))
+#     # Remove records without abstracts as these can distort the screening performance of the model
+#     across(c(author, title, abstract), ~ na_if(., ""))
 #   )
 # 
 # ris_dat_excl
@@ -50,7 +51,7 @@
 #   select(author, eppi_id, title, abstract) |>
 #   mutate(
 #     human_code = 1, #Tracking the human decision
-#     across(c(author, title, abstract), ~ na_if(., "NA"))
+#     across(c(author, title, abstract), ~ na_if(., ""))
 #   )
 # 
 # ris_dat_incl

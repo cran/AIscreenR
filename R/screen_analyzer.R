@@ -131,15 +131,16 @@ screen_analyzer <- function(x, human_decision = human_code, key_result = TRUE){
         .calc_perform(hum_decision = {{ human_decision }}) |>
         dplyr::mutate(
           incl_p = .x,
-          criteria = dplyr::if_else(
-            .x != 1,
-            paste0("Studies have been included in at least ", .x*100, "% of the ", reps, " screenings."),
+          criteria = if (.x != 1) {
+            paste0("Studies have been included in at least ", .x * 100, "% of the ", reps, " screenings.")
+          } else {
             paste0("Studies have been included in all of the ", reps, " screenings.")
-          )
+          }
         )
 
     }) |>
-      purrr::list_rbind()
+      purrr::list_rbind() |> 
+      dplyr::arrange(promptid)
 
     if (key_result) {
       res_p_incl <-

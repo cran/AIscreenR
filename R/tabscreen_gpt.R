@@ -98,13 +98,14 @@
 #'   Default is `TRUE`.
 #' @param incl_cutoff_upper Numerical value indicating the probability threshold
 #'   for which a studies should be included. ONLY relevant when the same questions is requested
-#'   multiple times (i.e., when any reps > 1). Default is 0.5, indicating that
-#'   titles and abstracts should only be included if GPT has included the study more than 50 percent of the times.
+#'   multiple times (i.e., when any reps > 1). Default is 0.1, indicating that
+#'   titles and abstracts should only be included if GPT has included the study more than 10 percent of the times
+#'   (e.g., 1 out of 10 screenings). This has been shown by Vembye et al. (2025) to work well with cheaper models.
 #' @param incl_cutoff_lower Numerical value indicating the probability threshold
-#'   above which studies should be check by a human. ONLY relevant when the same questions is requested
-#'   multiple times (i.e., when any reps > 1). Default is 0.4, meaning
-#'   that if you ask GPT the same questions 10 times and it includes the
-#'   title and abstract 4 times, we suggest that the study should be check by a human.
+#'   above which studies should be checked by a human. ONLY relevant when the same questions is requested
+#'   multiple times (i.e., when any reps > 1) and `incl_cutoff_upper` > 0.1. Records with inclusion probabilities 
+#'   between `incl_cutoff_lower` and `incl_cutoff_upper` will be flagged for human checking. 
+#'   Default is `NULL`, which means that no studies will be flagged for human checking.
 #' @param force Logical argument indicating whether to force the function to use more than
 #'   10 iterations for gpt-3.5 models and more than 1 iteration for gpt-4 models other than gpt-4o-mini.
 #'   This argument is developed to avoid the conduct of wrong and extreme sized screening.
@@ -322,7 +323,9 @@ tabscreen_gpt <- tabscreen_gpt.tools <- function(
 
   # Stop if wrong models are called
   if (!custom_model){
-    if(any(!model %in% model_prizes$model)) stop("Unknown gpt model(s) used - check model name(s).")
+    if(any(!model %in% model_prizes$model)) {
+      stop("Unknown gpt model(s) used - check model name(s) or set `custom_model = TRUE` if you are using a fine-tuned or newer model not included in the package as default!")
+    }
   }
 
   # Stop if top_p is set for gpt-5 models
@@ -337,33 +340,36 @@ tabscreen_gpt <- tabscreen_gpt.tools <- function(
   }
 
   # Check if the user want to use gpt-4 model with iterations
-  if (any(stringr::str_detect(model, "gpt-4")) && max(reps) > 1 && !force){
+  ## Consider updating to include gpt-5. But we need to think more deeply about this as not
+  ## all (future) models necessarily include a number
 
-    gpt4_dat <-
-      tibble::tibble(model, reps) |>
-      dplyr::filter(!stringr::str_detect(model, "mini|nano"))
-
-      if(nrow(gpt4_dat) > 0){
-
-        gpt4_reps <-
-          gpt4_dat |>
-          dplyr::filter(stringr::str_detect(model, "gpt-4")) |>
-          dplyr::pull(reps) |>
-          max()
-
-        if (gpt4_reps > 1){
-
-          max_reps_mes_gpt4 <-
-            paste("* Are you sure you want to use", gpt4_reps, "iterations with a gpt-4 model?",
-                  "If so, set force = TRUE.")
-          stop(max_reps_mes_gpt4)
-
-        }
-
-      }
-
-
-  }
+#  if (any(stringr::str_detect(model, "gpt-4")) && max(reps) > 1 && !force){
+#
+#    gpt4_dat <-
+#      tibble::tibble(model, reps) |>
+#      dplyr::filter(!stringr::str_detect(model, "mini|nano"))
+#
+#      if(nrow(gpt4_dat) > 0){
+#
+#        gpt4_reps <-
+#          gpt4_dat |>
+#          dplyr::filter(stringr::str_detect(model, "gpt-4")) |>
+#          dplyr::pull(reps) |>
+#          max()
+#
+#        if (gpt4_reps > 1){
+#
+#          max_reps_mes_gpt4 <-
+#            paste("* Are you sure you want to use", gpt4_reps, "iterations with a gpt-4 model?",
+#                  "If so, set force = TRUE.")
+#          stop(max_reps_mes_gpt4)
+#
+#        }
+#
+#      }
+#
+#
+#  }
 
   # Ensuring that the rpm argument fits to the corresponding model
   if (length(rpm) > 1 && length(model) != length(rpm)){
@@ -490,8 +496,8 @@ tabscreen_gpt <- tabscreen_gpt.tools <- function(
   if (any(reps > 1)) {
     if(is.numeric(incl_cutoff_upper) && is.null(incl_cutoff_lower)) incl_cutoff_lower <- incl_cutoff_upper
 
-    if (is.null(incl_cutoff_upper)) incl_cutoff_upper <- 0.5
-    if (is.null(incl_cutoff_lower)) incl_cutoff_lower <- incl_cutoff_upper - 0.1
+    if (is.null(incl_cutoff_upper)) incl_cutoff_upper <- 0.1
+    if (is.null(incl_cutoff_lower)) incl_cutoff_lower <- incl_cutoff_upper
   }
 
   #.........................
