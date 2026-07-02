@@ -1,6 +1,22 @@
-# AIscreenR 0.3.2
+# AIscreenR 0.4.0
 
-# AIscreenR 0.3.1.9008
+## New features
+* Adding `tabscreen_mistral()` and `get_api_key_mistral()` functions to screen titles and abstracts using Mistral's API models.
+* Adding `tabscreen_gemini()` and `get_api_key_gemini()` function to screen titles and abstracts using Gemini's API models.
+* Adding `tabscreen_claude()` and `get_api_key_anthropic()` function to screen titles and abstracts using Anthropics's API models.
+
+## Major improvements
+* Migrating from chat/completions endpoint to responses for all OpenAI functions. This includes:
+    * `tabscreen_gpt()`
+    * `screen_errors.gpt()`
+    * `rate_limits_per_minute()`
+
+## Minor improvements
+* Updated the prize function with up-to-date prizes for the GPT-5 models. 
+* Adding the n_screened and n_missing variables to the key results in `screen_analyzer()`.
+
+
+# AIscreenR 0.3.2
 
 ## Minor improvements
 * Updating the default inclusion threshold and documentation hereof when conducting replicate screenings to be aligned with the finding from Vembye et al. (2025).

@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.37">
+<meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Mikkel H. Vembye">
-<meta name="dcterms.date" content="2026-04-20">
+<meta name="dcterms.date" content="2026-07-01">
 
 <title>Using OpenAI’s GPT API models for Title and Abstract Screening in Systematic Reviews</title>
 <style>
@@ -232,7 +232,7 @@ text-decoration: underline; }
 <h1 class="title">Using OpenAI’s GPT API models for Title and Abstract Screening in Systematic Reviews</h1>
 <p class="author">Mikkel H. Vembye</p>
 
-<p class="date">2026-04-20</p>
+<p class="date">2026-07-01</p>
 </header>
 
 <nav id="TOC" role="doc-toc">
@@ -319,7 +319,7 @@ text-decoration: underline; }
 </ol>
 <p>We will walk through each of these steps one by one in the following sections.</p>
 <h1 id="load-and-convert-ris-file-data-to-a-data-frame">Load and Convert RIS File Data to a Data Frame</h1>
-<p>At this stage, we expect that you have a collection of RIS files containing titles and abstracts for the references you wish to screen. You can obtain RIS files in several ways: directly from the research databases, a Google Scholar search; or by exported them from your reference management tool, such as EndNote, Mendeley, and RefMan. Alternatively, you can export RIS files from systematic software tools such as <a href="https://eppi.ioe.ac.uk/cms/Default.aspx?tabid=2914">EPPI-reviewer</a>, <a href="https://www.covidence.org/">Covidence</a>, <a href="https://www.metareviewer.org/">MetaReviewer</a>, <a href="http://www.eshackathon.org/revtools/"><code>revtools</code></a> <span class="citation" data-cites="westgate2019">(<a href="#ref-westgate2019" role="doc-biblioref">Westgate, 2019</a>)</span>, among others. In the example below, we load RIS files extracted from <a href="https://eppi.ioe.ac.uk/cms/Default.aspx?tabid=2914">EPPI-reviewer</a>. A minor advantage of exporting RIS files from systematic software tools is that they often add a unique study ID to each reference, making it easier to track the screening process. However, such IDs are automatically generated in <code>tabscreen_gpt()</code> if they are missing.</p>
+<p>At this stage, we expect that you have a collection of RIS files containing titles and abstracts for the references you wish to screen. You can obtain RIS files in several ways: directly from the research databases, a Google Scholar search; or by exported them from your reference management tool, such as EndNote, Mendeley, and RefMan. Alternatively, you can export RIS files from systematic software tools such as <a href="https://eppi.ioe.ac.uk/cms/er4/">EPPI-reviewer</a>, <a href="https://www.covidence.org/">Covidence</a>, <a href="https://www.metareviewer.org/">MetaReviewer</a>, <a href="http://www.eshackathon.org/revtools/"><code>revtools</code></a> <span class="citation" data-cites="westgate2019">(<a href="#ref-westgate2019" role="doc-biblioref">Westgate, 2019</a>)</span>, among others. In the example below, we load RIS files extracted from <a href="https://eppi.ioe.ac.uk/cms/er4/">EPPI-reviewer</a>. A minor advantage of exporting RIS files from systematic software tools is that they often add a unique study ID to each reference, making it easier to track the screening process. However, such IDs are automatically generated in <code>tabscreen_gpt()</code> if they are missing.</p>
 <h2 id="load-relevant-r-packages">Load relevant R packages</h2>
 <p>To get started, we first load all R package needed to construct and run the screening.</p>
 <div class="cell">

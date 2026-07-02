@@ -1,6 +1,6 @@
 Package: AIscreenR
 Title: AI Screening Tools in R for Systematic Reviewing
-Version: 0.3.2
+Version: 0.4.0
 Authors@R: c(
     person(given = "Mikkel H.", 
            family = "Vembye", 
@@ -16,7 +16,6 @@ Description: Provides functions to conduct title and abstract screening in syste
 Depends: R (>= 4.1.0)
 License: GPL (>= 3)
 Encoding: UTF-8
-RoxygenNote: 7.3.3
 Imports: dplyr, tibble, httr2, stringr, furrr, tidyr, tictoc, askpass,
         curl, purrr, lifecycle, jsonlite, htmltools, tidyselect, rlang
 Suggests: future, knitr, rmarkdown, usethis, testthat (>= 3.0.0),
@@ -31,11 +30,12 @@ BugReports: https://github.com/MikkelVembye/AIscreenR/issues
 LazyData: true
 VignetteBuilder: quarto
 Config/Needs/website: quarto
+Config/roxygen2/version: 8.0.0
 NeedsCompilation: no
-Packaged: 2026-04-20 19:26:03 UTC; B199526
+Packaged: 2026-07-01 11:21:19 UTC; B199526
 Author: Mikkel H. Vembye [aut, cre] (ORCID:
     <https://orcid.org/0000-0001-9071-0724>),
   Thomas Olsen [aut]
 Maintainer: Mikkel H. Vembye <mikkel.vembye@gmail.com>
 Repository: CRAN
-Date/Publication: 2026-04-20 20:50:17 UTC
+Date/Publication: 2026-07-02 03:52:08 UTC
